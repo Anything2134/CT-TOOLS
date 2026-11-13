@@ -1,0 +1,16 @@
+# Opus codec reference implementation pkg-config file
+
+prefix=/data/data/com.termux/files/home/ct-tools/third_party/opus
+exec_prefix=/data/data/com.termux/files/home/ct-tools/third_party/opus
+libdir=/data/data/com.termux/files/home/ct-tools/third_party/opus/lib
+includedir=/data/data/com.termux/files/home/ct-tools/third_party/opus/include
+
+Name: Opus
+Description: Opus IETF audio codec ( build)
+URL: https://opus-codec.org/
+Version: 1.5.2
+Requires:
+Conflicts:
+Libs: -L/data/data/com.termux/files/home/ct-tools/third_party/opus/lib -lopus
+Libs.private: -lm
+Cflags: -I/data/data/com.termux/files/home/ct-tools/third_party/opus/include/opus

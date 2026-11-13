@@ -1,0 +1,29 @@
+# Rust build artifacts
+target/
+**/*.rs.bk
+Cargo.lock
+
+# Flutter / Dart build artifacts
+.dart_tool/
+.packages
+build/
+ct_tools_ui/build/
+ct_tools_ui/.dart_tool/
+ct_tools_ui/.flutter-plugins
+ct_tools_ui/.flutter-plugins-dependencies
+
+# Android build and local caches
+.gradle/
+**/android/.gradle/
+**/android/local.properties
+**/android/app/build/
+**/android/captures/
+*.apk
+*.aab
+
+# Local logs and temporary testing media
+*.log
+/sdcard/
+third_party/*_unpacked*
+third_party/opus_src/
+repomix-output*

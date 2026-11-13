@@ -17,3 +17,6 @@ features = ["media", "nativewindow"]
 
 [dependencies.ndk-sys]
 version = "0.6"
+
+[build-dependencies]
+cc = "1.0"
