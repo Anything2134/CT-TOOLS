@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "crates/ct_core",
+    "crates/ct_media",
+]
+resolver = "2"

@@ -1,0 +1,20 @@
+[package]
+name = "ct_media"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+jni = "0.21"
+ffmpeg-next = "7.0"
+log = "0.4"
+android_logger = "0.13"
+
+[dependencies.ndk]
+version = "0.9"
+features = ["media", "native_window"]
+
+[dependencies.ndk-sys]
+version = "0.6"
