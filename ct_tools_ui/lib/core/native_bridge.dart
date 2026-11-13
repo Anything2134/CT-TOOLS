@@ -1,5 +1,6 @@
 import 'dart:ffi' as ffi;
 import 'dart:io';
+import 'package:ffi/ffi.dart';
 
 final class VideoConfigFFI extends ffi.Struct {
   @ffi.Int32()
@@ -19,47 +20,75 @@ final class VideoConfigFFI extends ffi.Struct {
 
                       @ffi.Int32()
                         external int gopSeconds;
-                        }
 
-                        final class AudioConfigFFI extends ffi.Struct {
                           @ffi.Int32()
-                            external int codecType;
+                            external int lowLatency;
+                            }
 
+                            final class AudioConfigFFI extends ffi.Struct {
                               @ffi.Int32()
-                                external int sampleRate;
+                                external int codecType;
 
                                   @ffi.Int32()
-                                    external int channels;
+                                    external int sampleRate;
 
                                       @ffi.Int32()
-                                        external int bitRate;
+                                        external int channels;
 
                                           @ffi.Int32()
-                                            external int vbrMode;
+                                            external int bitRate;
 
                                               @ffi.Int32()
-                                                external int complexity;
+                                                external int vbrMode;
 
-                                                  @ffi.Float()
-                                                    external double frameDurationMs;
-                                                    }
+                                                  @ffi.Int32()
+                                                    external int complexity;
 
-                                                    typedef NativeInitializeVideo = ffi.Pointer<ffi.Void> Function(VideoConfigFFI config);
-                                                    typedef DartInitializeVideo = ffi.Pointer<ffi.Void> Function(VideoConfigFFI config);
+                                                      @ffi.Float()
+                                                        external double frameDurationMs;
+                                                        }
 
-                                                    typedef NativeStopPipeline = ffi.Int32 Function();
-                                                    typedef DartStopPipeline = int Function();
+                                                        typedef NativeInitVideo = ffi.Pointer<ffi.Void> Function(
+                                                          VideoConfigFFI config,
+                                                            ffi.Pointer<Utf8> mimeType,
+                                                            );
+                                                            typedef DartInitVideo = ffi.Pointer<ffi.Void> Function(
+                                                              VideoConfigFFI config,
+                                                                ffi.Pointer<Utf8> mimeType,
+                                                                );
 
-                                                    class NativeMediaEngine {
-                                                      static final ffi.DynamicLibrary _dylib = Platform.isAndroid
-                                                            ? ffi.DynamicLibrary.open("libct_media.so")
-                                                                  : throw UnsupportedError("Platform not supported");
+                                                                typedef NativeStopPipeline = ffi.Int32 Function();
+                                                                typedef DartStopPipeline = int Function();
 
-                                                                    static final DartInitializeVideo initializeVideo = _dylib
-                                                                          .lookup<ffi.NativeFunction<NativeInitializeVideo>>("ct_media_initialize_video")
-                                                                                .asFunction();
+                                                                typedef NativeInstallPackage = ffi.Int32 Function(
+                                                                  ffi.Pointer<Utf8> storageDir,
+                                                                    ffi.Pointer<Utf8> pubKeyHex,
+                                                                      ffi.Pointer<Utf8> manifestJson,
+                                                                      );
+                                                                      typedef DartInstallPackage = int Function(
+                                                                        ffi.Pointer<Utf8> storageDir,
+                                                                          ffi.Pointer<Utf8> pubKeyHex,
+                                                                            ffi.Pointer<Utf8> manifestJson,
+                                                                            );
 
-                                                                                  static final DartStopPipeline stopPipeline = _dylib
-                                                                                        .lookup<ffi.NativeFunction<NativeStopPipeline>>("ct_media_stop_pipeline")
-                                                                                              .asFunction();
-                                                                                              }
+                                                                            class CtToolsNativeBridge {
+                                                                              static final ffi.DynamicLibrary _mediaLib = Platform.isAndroid
+                                                                                    ? ffi.DynamicLibrary.open("libct_media.so")
+                                                                                          : throw UnsupportedError("Android platform required");
+
+                                                                                            static final ffi.DynamicLibrary _coreLib = Platform.isAndroid
+                                                                                                  ? ffi.DynamicLibrary.open("libct_core.so")
+                                                                                                        : throw UnsupportedError("Android platform required");
+
+                                                                                                          static final DartInitVideo initializeVideo = _mediaLib
+                                                                                                                .lookup<ffi.NativeFunction<NativeInitVideo>>("ct_media_initialize_video")
+                                                                                                                      .asFunction();
+
+                                                                                                                        static final DartStopPipeline stopMediaPipeline = _mediaLib
+                                                                                                                              .lookup<ffi.NativeFunction<NativeStopPipeline>>("ct_media_stop_pipeline")
+                                                                                                                                    .asFunction();
+
+                                                                                                                                      static final DartInstallPackage installOrHotUpdatePackage = _coreLib
+                                                                                                                                            .lookup<ffi.NativeFunction<NativeInstallPackage>>("ct_core_install_package_json")
+                                                                                                                                                  .asFunction();
+                                                                                                                                                  }

@@ -7,7 +7,6 @@ plugins {
 android {
     namespace = "com.cttools.ct_tools_ui"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

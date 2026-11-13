@@ -8,13 +8,12 @@ crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
 jni = "0.21"
-ffmpeg-next = "7.0"
 log = "0.4"
 android_logger = "0.13"
 
 [dependencies.ndk]
 version = "0.9"
-features = ["media", "native_window"]
+features = ["media", "nativewindow"]
 
 [dependencies.ndk-sys]
 version = "0.6"
